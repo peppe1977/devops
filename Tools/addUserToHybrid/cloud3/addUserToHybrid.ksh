@@ -1,14 +1,13 @@
-// Script to provision users into Apcera Platform Cluster
-// Dev is provisioned with a private namespace (and isolation)
-// 
-//
-// 
-// To-Do: 1. create templates multi-tenants (project common namespace) and adapt script
-//           in order to have 2 options. Dev with only private ns and dev with private and
-//           project ns.
-
-
 #!/bin/ksh
+
+## Script to provision users into Apcera Platform Cluster
+## Dev is provisioned with a private namespace (and isolation)
+## 
+##
+## 
+## To-Do: 1. create templates multi-tenants (project common namespace) and adapt script
+##           in order to have 2 options. Dev with only private ns and dev with private and
+##           project ns.
 
 function dieUsage
 {
@@ -50,7 +49,7 @@ typeset -l EMAIL=""
 typeset -l USER_NAME=""
 INSTALL_DEMO=false
 #HYBRID_CLUSTER="http://cloud3.ericsson-magic.net" #Apcera on vSphere/ESXi (Santa Clara)
-HYBRID_CLUSTER="https://cloud.explab.net" #Apcera on Geo-Dist (Plano/Santa Clara) Hybrid Bare/vSphere
+HYBRID_CLUSTER="http://cloud.explab.net" #Apcera on Geo-Dist (Plano/Santa Clara) Hybrid Bare/vSphere
 #APP_NAME=workloadmobility
 
 typeset -u MEMORY=2GB
