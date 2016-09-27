@@ -1,0 +1,98 @@
+// Setting Permissions to the different Projects
+
+// Project: Predictive Mobility
+
+on audit::/prod-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on cluster::/prod-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+     permit all
+  }
+}
+
+on gateway::/prod-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+     permit all
+  }
+}
+
+on job::/prod-predictive-mobility  {
+
+//  { schedulingTag.hard otc }
+
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+     permit create, read, update, delete
+     permit start, stop, map, ssh, promote
+  }
+
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility" &&
+     (sourceJob nameMatch "job::/prod-predictive-mobility" ||
+      targetJob nameMatch "job::/prod-predictive-mobility" ||
+      service nameMatch "service::/prod-predictive-mobility" ||
+      service nameMatch "service::/apcera" ||
+      network nameMatch "network::/prod-predictive-mobility")) 
+      {
+      permit link, bind, join
+      }
+}
+
+on package::/prod-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on principal::/prod-predictive-mobility {
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+     permit all
+  }
+}
+
+on provider::/prod-predictive-mobility {
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on sempiperule::/prod-predictive-mobility {
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on service::/prod-predictive-mobility {
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on stagpipe::/prod-predictive-mobility {
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on network::/prod-predictive-mobility {
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+  {
+    permit all
+  }
+}

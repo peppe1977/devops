@@ -1,0 +1,102 @@
+// Project: Cloud-IDP
+
+on audit::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+    permit all
+  }
+}
+
+on cluster::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+     permit all}
+}
+
+on gateway::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+     permit all
+  }
+}
+
+on job::/prod-cloud-idp  {
+
+//  { schedulingTag.hard otc }
+
+  if (team == "Project prod-cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+     permit create, read, update, delete
+     permit start, stop, map, ssh, promote
+  }
+
+  if (team == "Project prod-cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp" &&
+     (sourceJob nameMatch "job::/prod-cloud-idp" ||
+      targetJob nameMatch "job::/prod-cloud-idp" ||
+      service nameMatch "service::/prod-cloud-idp" ||
+      service nameMatch "service::/apcera" ||
+      network nameMatch "network::/prod-cloud-idp")) 
+      {
+       permit link, bind, join
+      }
+}
+
+on package::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+    permit all
+  }
+}
+
+on principal::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+     permit all
+  }
+}
+
+on provider::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+    permit all
+  }
+}
+
+on sempiperule::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+    permit all
+  }
+}
+
+on service::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+    permit all
+  }
+}
+
+on stagpipe::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+    permit all
+  }
+}
+
+on network::/prod-cloud-idp 
+{
+  if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+  {
+    permit all
+  }
+}
+

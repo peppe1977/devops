@@ -1,0 +1,110 @@
+// Setting Permissions to the different Projects
+
+on audit::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on cluster::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+     permit all
+  }
+}
+
+on gateway::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+     permit all
+  }
+}
+
+on job::/test-predictive-mobility  {
+
+//  { schedulingTag.hard otc }
+
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+     permit create, read, update, delete
+     permit start, stop, map, ssh, promote
+  }
+
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility" &&
+     (sourceJob nameMatch "job::/test-predictive-mobility" ||
+      targetJob nameMatch "job::/test-predictive-mobility" ||
+      service nameMatch "service::/test-predictive-mobility" ||
+      service nameMatch "service::/apcera" ||
+      network nameMatch "network::/test-predictive-mobility")) 
+      {
+       permit link, bind, join
+      }
+}
+
+on package::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on policy::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+     permit read
+  }
+}
+
+on principal::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+     permit all
+  }
+}
+
+on provider::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on sempiperule::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on service::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on stagpipe::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+    permit all
+  }
+}
+
+on network::/test-predictive-mobility 
+{
+  if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+  {
+    permit all
+  }
+}

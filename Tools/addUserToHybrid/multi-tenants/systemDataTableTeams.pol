@@ -1,0 +1,12 @@
+on variables::/ {
+  system policy variable
+  {
+    Teams
+    (teamname, username) {
+      {"Project predictive-mobility", "c26testuser1@gmail.com"}
+      {"Project cloud-idp", "sdc.sanjose@gmail.com"}
+      {"Project cloud-idp", "jbischof@gmail.com"}
+      {"Project cloud-idp", "xia.syed@gmail.com"}
+    }
+  }
+}

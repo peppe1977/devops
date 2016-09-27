@@ -1,0 +1,164 @@
+on all::/ {
+  if (query->target fqnMatch "*::/" && auth_server@apcera.me->name == "c26testuser1") {
+    team "Project predictive-mobility"
+  }
+  if (query->target fqnMatch "policy::/" && auth_server@apcera.me->name == "c26testuser1") {
+    team "Project predictive-mobility"
+  }
+  if (query->target fqnMatch "policydoc::/" && auth_server@apcera.me->name == "c26testuser1") {
+    team "Project predictive-mobility"
+  }
+  if (query->target fqnMatch "*::/" && auth_server@apcera.me->name == "sdc.sanjose") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policy::/" && auth_server@apcera.me->name == "sdc.sanjose") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policydoc::/" && auth_server@apcera.me->name == "sdc.sanjose") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "*::/" && auth_server@apcera.me->name == "jbischof") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policy::/" && auth_server@apcera.me->name == "jbischof") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policydoc::/" && auth_server@apcera.me->name == "jbischof") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "*::/" && auth_server@apcera.me->name == "xia.syed") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policy::/" && auth_server@apcera.me->name == "xia.syed") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policydoc::/" && auth_server@apcera.me->name == "xia.syed") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "*::/" && auth_server@apcera.me->name == "peppe1977@gmail.com") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policy::/" && auth_server@apcera.me->name == "peppe1977@gmail.com") {
+    team "Project cloud-idp"
+  }
+  if (query->target fqnMatch "policydoc::/" && auth_server@apcera.me->name == "peppe1977@gmail.com") {
+    team "Project cloud-idp"
+  }
+}
+
+
+// Giving read permissions to relevant polices only
+
+on policydoc::/ {
+  if (team == "Project predictive-mobility" && query->target_str endsWith "prA") 
+  {
+    permit read
+  }
+  if (team == "Project cloud-idp" && query->target_str endsWith "prB") 
+  {
+    permit read
+  }
+}
+
+// Project Predictive-Mobility
+
+// Allowing to read on projects polices
+
+on policy::/::prod-predictive-mobility-prA
+{
+  if (team == "Project predictive-mobility")
+  {
+     permit read
+  }
+}
+
+on policy::/prod-predictive-mobility
+{
+  if (team == "Project predictive-mobility")
+  {
+     permit read
+  }
+}
+
+on policydoc::/::prod-predictive-mobility-prA 
+{
+  if (team == "Project predictive-mobility")
+  {
+    permit read, update
+  }
+}
+
+on policy::/::test-predictive-mobility-prA
+{
+  if (team == "Project predictive-mobility")
+  {
+     permit read
+  }
+}
+
+on policy::/test-predictive-mobility
+{
+  if (team == "Project predictive-mobility")
+  {
+     permit read
+  }
+}
+
+on policydoc::/::test-predictive-mobility-prA 
+{
+  if (team == "Project predictive-mobility")
+  {
+    permit read, update
+  }
+}
+
+
+// Project: cloud-idp
+
+on policy::/::prod-cloud-idp-prB
+{
+  if (team == "Project cloud-idp")
+  {
+     permit read
+  }
+}
+
+on policy::/prod-cloud-idp
+{
+  if (team == "Project cloud-idp")
+  {
+     permit read
+  }
+}
+
+on policydoc::/::prod-cloud-idp-prB 
+{
+  if (team == "Project cloud-idp")
+  {
+    permit read, update
+  }
+}
+
+on policy::/::test-cloud-idp-prB
+{
+  if (team == "Project cloud-idp")
+  {
+     permit read
+  }
+}
+
+on policy::/test-cloud-idp
+{
+  if (team == "Project cloud-idp")
+  {
+     permit read
+  }
+}
+
+on policydoc::/::test-cloud-idp-prB 
+{
+  if (team == "Project cloud-idp")
+  {
+    permit read, update
+  }
+}

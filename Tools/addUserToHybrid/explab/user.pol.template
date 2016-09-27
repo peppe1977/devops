@@ -1,0 +1,94 @@
+auth::/oauth2/http {
+  if (Google->email == "%EMAIL%") {
+    permit issue
+    name "%USER_NAME%"
+  }
+}
+
+// A developer user can read the log in the web console for its namespace
+on audit::/sandbox/%USER_NAME%
+{
+  if (auth_server@apcera.me->name == "%USER_NAME%")
+  {
+    permit read
+  }
+}
+
+auth::/ {
+  if (auth_server@apcera.me->name == "%USER_NAME%") {
+    defaultNamespace "/sandbox/%USER_NAME%"
+  }
+}
+
+
+// A developer needs read/use access to existing apcera apckages
+on package::/apcera/pkg {
+  if (auth_server@apcera.me->name == "%USER_NAME%") {
+    permit read, use
+  }
+}
+
+// A developer needs read/use/bind access to existing apcera services (i.e. egress)
+on service::/apcera {
+  if (auth_server@apcera.me->name == "%USER_NAME%") {
+    permit read, use, bind
+  }
+}
+
+// A developer needs read/use access to existing apcera providers in order to be able create service**
+on provider::/ {
+  if (auth_server@apcera.me->name == "%USER_NAME%") {
+    permit read, use
+  }
+}
+
+policydoc::/::user-policy-%USER_HYPHEN% {
+  if (auth_server@apcera.me->name == "%USER_NAME%") {
+    permit read, update
+  }
+}
+
+on policy::/sandbox/%USER_NAME% {
+  if (auth_server@apcera.me->name == "%USER_NAME%") {
+    permit all
+  }
+}
+
+//on policy::/dev/%USER_NAME% {
+//  if (auth_server@apcera.me->name == "%USER_NAME%") {
+//    permit all
+//  }
+//}
+
+on policy::/http/net/explab/cloud/sandbox/%USER_SLASH_ROUTE% {
+  if (auth_server@apcera.me->name == "%USER_NAME%") {
+    permit all
+  }
+}
+
+// this could be done with a pattern
+//
+on job::/sandbox/%USER_NAME%
+{
+    if (auth_server@apcera.me->name=="%USER_NAME%")
+    {
+        defaultRouteSuffix "%USER_NAME%.sandbox.%CLUSTER%"
+    }
+}
+
+// Also let this user see the cluster
+//
+on cluster::/ 
+{
+  if (auth_server@apcera.me->name == "%USER_NAME%") 
+  { 
+    permit read
+  }
+}
+
+quota::/sandbox/%USER_NAME% {
+  { total.package.size 2GB }
+  { total.memory %MEMORY% }
+  { total.disk 10GB }
+  { total.network 1Gbps }
+}

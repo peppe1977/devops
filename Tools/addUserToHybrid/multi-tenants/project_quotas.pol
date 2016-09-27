@@ -1,0 +1,45 @@
+// Setting quotas for the different project namespaces
+
+// Predictive Mobility
+
+quota::/prod-predictive-mobility
+{
+    {
+    total.package.size 2GB
+    total.memory 8GB
+    total.disk 20GB
+    total.network 1Gbps
+    }
+}
+
+quota::/test-predictive-mobility
+{
+    {
+    total.package.size 2GB
+    total.memory 8GB
+    total.disk 20GB
+    total.network 1Gbps
+    }
+}
+
+// Cloud-IDP
+
+quota::/prod-cloud-idp
+{
+    {
+    total.package.size 2GB
+    total.memory 8GB
+    total.disk 20GB
+    total.network 1Gbps
+    }
+}
+
+quota::/test-cloud-idp
+{
+    {
+    total.package.size 2GB
+    total.memory 8GB
+    total.disk 20GB
+    total.network 1Gbps
+    }
+}

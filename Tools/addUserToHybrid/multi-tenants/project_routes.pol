@@ -1,0 +1,69 @@
+// Setting quotas for the different project namespaces
+
+// Predictive Mobility
+
+on job::/prod-predictive-mobility
+{
+    if (team == "Project predictive-mobility" && query->target fqnMatch "*::/prod-predictive-mobility") 
+    {
+        defaultRouteSuffix "prod-pm.cloud3.ericsson-magic.net"
+    }
+}
+
+on job::/prod-predictive-mobility
+{
+    if (team == "Project predictive-mobility" && query->target fqnMatch "*::/test-predictive-mobility") 
+    {
+        defaultRouteSuffix "test-pm.cloud3.ericsson-magic.net"
+    }
+}
+
+on route::/http/net/ericsson-magic/cloud3/prod-pm
+{
+  if (job fqnMatch "job::/prod-predictive-mobility")
+  {
+    permit map
+  }
+}
+
+on route::/http/net/ericsson-magic/cloud3/prod-pm
+{
+  if (job fqnMatch "job::/test-predictive-mobility")
+  {
+    permit map
+  }
+}        
+            
+// Cloud-IDP
+
+on job::/prod-predictive-mobility
+{
+    if (team == "Project cloud-idp" && query->target fqnMatch "*::/prod-cloud-idp") 
+    {
+        defaultRouteSuffix "prod-cloud-idp.cloud3.ericsson-magic.net"
+    }
+}
+
+on job::/prod-predictive-mobility
+{
+    if (team == "Project cloud-idp" && query->target fqnMatch "*::/test-cloud-idp") 
+    {
+        defaultRouteSuffix "test-cloud-idp.cloud3.ericsson-magic.net"
+    }
+}
+
+on route::/http/net/ericsson-magic/cloud3/prod-cloud-idp
+{
+  if (job fqnMatch "job::/prod-cloud-idp")
+  {
+    permit map
+  }
+}
+
+on route::/http/net/ericsson-magic/cloud3/test-cloud-idp
+{
+  if (job fqnMatch "job::/test-cloud-idp")
+  {
+    permit map
+  }
+}      
