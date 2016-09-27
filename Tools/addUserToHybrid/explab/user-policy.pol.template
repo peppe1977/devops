@@ -2,8 +2,6 @@
 // within your own namespace '/sandbox/%USER_NAME%'
 //
 // See http://docs.apcera.com/policy/policy-toc/ for more details
-
-
 // Pre-defined policy (allow most common use cases)
 
 on job::/sandbox/%USER_NAME% 

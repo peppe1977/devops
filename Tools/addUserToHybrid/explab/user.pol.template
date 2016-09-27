@@ -22,7 +22,7 @@ auth::/ {
 
 
 // A developer needs read/use access to existing apcera apckages
-on package::/apcera/pkg {
+on package::/apcera {
   if (auth_server@apcera.me->name == "%USER_NAME%") {
     permit read, use
   }
