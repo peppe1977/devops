@@ -1,5 +1,6 @@
+# Policy for ericsson user %E_EMAIL%
 auth::/oauth2/http {
-  if (Google->email == "%EMAIL%") {
+  if (Google->email == "%G_EMAIL%") {
     permit issue
     name "%USER_NAME%"
   }
