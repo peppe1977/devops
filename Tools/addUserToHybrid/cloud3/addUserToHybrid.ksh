@@ -9,10 +9,11 @@
 ##           in order to have 2 options. Dev with only private ns and dev with private and
 ##           project ns.
 
+
 function dieUsage
 {
 	echo "$*"
-	echo "addUserToHybrid.ksh -e email -n username"
+	echo "addUserToHybrid.ksh -g google email -n username -e ericsson-email" 
 	exit 9
 }
 
@@ -35,7 +36,8 @@ function fixFile
 	cp $sourceFile $destFile
 	
 	sed -i.zz "s|%CLUSTER%|$CLUSTER|g" $destFile
-	sed -i.zz "s|%EMAIL%|$EMAIL|g" $destFile
+	sed -i.zz "s|%E_EMAIL%|$E_EMAIL|g" $destFile
+	sed -i.zz "s|%G_EMAIL%|$G_EMAIL|g" $destFile
 	sed -i.zz "s|%USER_HYPHEN%|$USER_HYPHEN|g" $destFile
 	sed -i.zz "s|%USER_NAME%|$USER_NAME|g" $destFile
 	sed -i.zz "s|%USER_SLASH_ROUTE%|$USER_SLASH_ROUTE|g" $destFile
@@ -48,23 +50,26 @@ function fixFile
 typeset -l EMAIL=""
 typeset -l USER_NAME=""
 INSTALL_DEMO=false
-#HYBRID_CLUSTER="http://cloud3.ericsson-magic.net" #Apcera on vSphere/ESXi (Santa Clara)
-HYBRID_CLUSTER="http://cloud.explab.net" #Apcera on Geo-Dist (Plano/Santa Clara) Hybrid Bare/vSphere
+#HYBRID_CLUSTER="https://hybridcloud.apcera.net"
+HYBRID_CLUSTER="http://cloud3.ericsson-magic.net"
 #APP_NAME=workloadmobility
 
 typeset -u MEMORY=2GB
 
-while getopts "de:fm:n:" option
+while getopts "de:fg:m:n:" option
 do
     case $option in
 	d)
 		INSTALL_DEMO=true
 	    ;;
 	e)
-		EMAIL=$OPTARG
+		E_EMAIL=$OPTARG
 	    ;;
 	f)
 	    FORCE=true
+	    ;;
+	g)
+		G_EMAIL=$OPTARG
 	    ;;
 	m)
 		MEMORY=$OPTARG
@@ -82,7 +87,7 @@ done
 
 shift `expr $OPTIND - 1`
 
-echo "ADDING $USER_NAME with email $EMAIL to cluster"
+echo "ADDING $USER_NAME with email $G_EMAIL to cluster"
 CLUSTER=$(echo $HYBRID_CLUSTER | cut -d/ -f 3)
 
 # Make sure that we are on the right cluster
@@ -94,7 +99,8 @@ then
 	apc target $HYBRID_CLUSTER
 fi
 
-[ -z "$EMAIL" ] && dieUsage "Email is required"
+[ -z "$G_EMAIL" ] && dieUsage "Google Email is required"
+[ -z "$E_EMAIL" ] && dieUsage "Ericsson Email is required"
 [ -z "$USER_NAME" ] && dieUsage "User Name is required"
 
 
@@ -157,7 +163,7 @@ EMAIL THIS:
 
 You have been added to the $CLUSTER with a memory quota of ${MEMORY}.
 You will be using google authentication to log on to the system.  The email 
-address that you provided [$EMAIL] is your login.
+address that you provided [$G_EMAIL] is your login.
 
 Your default namespace is [/sandbox/$USER_NAME]
 
