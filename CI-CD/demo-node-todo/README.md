@@ -1,4 +1,4 @@
-### demo-node-todo
+### demo-node-todo ci-cd
 
 This app is used as an example in the Apcera Platform Tutorial, and includes functionality for connecting to Postgres and MySQL databases. It based on [TodoMVC](http://todomvc.com/).
 
