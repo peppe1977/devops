@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" ng-app="todomvc">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Demo App - TodoMVC</title>
+  <link rel="stylesheet" href="/base.css">
+  <link rel="stylesheet" href="/app.css">
+  <style>[ng-cloak] {display: none}</style>
+  <!--[if IE]>
+  <script src="../../assets/ie.js"></script>
+  <![endif]-->
+  <script src="/angular.min.js"></script>
+  <script src="/angular-route.min.js"></script>
+  <script src="/jquery.min.js"></script>
+  <script src="/client.js"></script>
+  <script src="/todoCtrl.js"></script>
+  <script src="/todoStorage.js"></script>
+  <script src="/todoFocus.js"></script>
+  <script src="/todoBlur.js"></script>
+</head>
+<body ng-controller="TodoCtrl">
+  <section id="todoapp">
+    <header id="header">
+      <h1>todo</h1>
+      <form id="todo-form" ng-submit="addTodo()">
+        <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" autofocus="autofocus" ng-class="{'hidden':hiddenForm == 'hide'}">
+      </form>
+
+    </header>
+    <section id="main" ng-show="todos.length" ng-cloak>
+      <!-- <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)"> -->
+      <!-- <label for="toggle-all">Mark all as complete</label> -->
+      <ul id="todo-list">
+        <li ng-repeat="todo in todos | filter:statusFilter" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+          <div class="view">
+            <!-- <input class="toggle" type="checkbox" ng-model="todo.completed"> -->
+            <label ng-dblclick="editTodo(todo)">{{todo.title}}</label>
+            <!-- <button class="destroy" ng-click="removeTodo(todo)"></button> -->
+          </div>
+          <form ng-submit="doneEditing(todo)">
+            <input class="edit" ng-model="todo.title" todo-blur="doneEditing(todo)" todo-focus="todo == editedTodo">
+          </form>
+        </li>
+      </ul>
+    </section>
+    <!-- <footer id="footer" ng-show="todos.length" ng-cloak>
+      <span id="todo-count"><strong>{{remainingCount}}</strong>
+        <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+      </span>
+      <ul id="filters">
+        <li>
+          <a ng-class="{selected: location.path() == '/'} " href="#/">All</a>
+        </li>
+        <li>
+          <a ng-class="{selected: location.path() == '/active'}" href="#/active">Active</a>
+        </li>
+        <li>
+          <a ng-class="{selected: location.path() == '/completed'}" href="#/completed">Completed</a>
+        </li>
+      </ul>
+      <button id="clear-completed" ng-click="clearDoneTodos()" ng-show="doneCount">Clear completed ({{doneCount}})</button>
+    </footer> -->
+  </section>
+  <section id="status" class="{{messageClass}}">{{dbMessage}}</section>
+  <footer id="info">
+    <div id="noTables">
+    <p ng-class="{'hidden':CreatePGTablesFormLink == 'hide'}">
+      <a href="" ng-click="createPGTables()">Create Table</a> to enter new tasks.
+    </p>
+    <p ng-class="{'hidden':CreateMSTablesFormLink == 'hide'}">
+      <a href="" ng-click="createMSTables()">Create Table</a> to enter new tasks.
+    </p>
+  </div>
+    <!-- <p>Credits:
+      <a href="http://twitter.com/cburgdorf">Christoph Burgdorf</a>,
+      <a href="http://ericbidelman.com">Eric Bidelman</a>,
+      <a href="http://jacobmumm.com">Jacob Mumm</a> and
+      <a href="http://igorminar.com">Igor Minar</a>
+    </p> -->
+
+    <div id="databaseCommands">
+      <a id="clearMS" class="action" href="" ng-class="{'hidden':activeDb == 'Postgres'}" ng-click="deleteMSRows()">Complete All Tasks</a>
+      <a id="clearPG" class="action" href="" ng-class="{'hidden':activeDb == 'MySQL'}" ng-click="deletePGRows()">Complete All Tasks</a>
+
+<!-- Postgres / MySQL select dropdown -->
+     <div style="margin: 20px 0">
+       <input type="radio" ng-model="activeDb" value="Postgres" id="dbpostgres"> <label for="dbpostgres">Postgres</label>
+       <input type="radio" ng-model="activeDb" value="MySQL" id="dbmysql">  <label for="dbmysql">MySQL</label>
+     </div>
+
+<!-- Show / Hide links -->
+      <a href="" ng-click="SQLToggleShowLink()" ng-class="{'hidden':SQLToggleLink == 'hide'}">Show SQL</a>
+      <a href="" ng-click="SQLToggleHideLink()" ng-class="{'hidden':SQLToggleLink == 'show'}">Hide SQL</a>
+
+      <div id="SQLCommands" ng-class="{'hidden':SQLToggleLink == 'show'}">
+
+  <!-- Postgres commands -->
+        <div ng-class="{'hidden':activeDb == 'MySQL'}">
+          Rows — <a href="" ng-click="showPGTasks()">Show</a>,
+          <a href="" ng-click="deletePGRows()">Delete</a>
+          <br />Tables — <a href="" ng-click="showPGTables()">Show</a>,
+          <a href="" ng-click="createPGTables()">Create</a>,
+          <a href="" ng-click="deletePGTables()">Drop</a>
+          <br /><textarea id="SQLOutput" rows="10" cols="50">{{pgOutput | json}}</textarea>
+        </div>
+
+  <!-- MySQL commands -->
+        <div ng-class="{'hidden':activeDb == 'Postgres'}">
+          Rows — <a href="" ng-click="showMSTasks()">Show</a>,
+          <a href="" ng-click="deleteMSRows()">Delete</a>
+          <br />Tables — <a href="" ng-click="showMSTables()">Show</a>,
+          <a href="" ng-click="createMSTables()">Create</a>,
+          <a href="" ng-click="deleteMSTables()">Drop</a>
+          <br /><textarea id="SQLOutput" rows="10" cols="50">{{msOutput | json}}</textarea>
+        </div>
+
+      </div>
+  </div>
+
+  <!-- <h2>Pageload time: {{loadTime}}</h2> -->
+  <p>
+    App courtesy of <a href="http://todomvc.com">TodoMVC</a>
+  </p>
+  </footer>
+</body>
+</html>
