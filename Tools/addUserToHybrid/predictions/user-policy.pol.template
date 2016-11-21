@@ -1,0 +1,116 @@
+// In this file you can write policy on different objects
+// within your own namespace '/sandbox/%USER_NAME%'
+//
+// See http://docs.apcera.com/policy/policy-toc/ for more details
+// Pre-defined policy (allow most common use cases)
+
+on job::/sandbox/%USER_NAME% 
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+    permit all
+    docker.allow "https://index.docker.io"
+    docker.allow "https://registry-1.docker.io/"
+    docker.allow "*"
+  }
+}
+
+on gateway::/sandbox/%USER_NAME%
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+    permit all
+  }
+}
+
+
+// A developer user can create and use network functionality
+on network::/sandbox/%USER_NAME%
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+    permit all
+  }
+}
+
+on package::/sandbox/%USER_NAME% 
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+    permit all
+  }
+}
+
+on provider::/sandbox/%USER_NAME% 
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+    permit all
+  }
+}
+
+// Permission to map route/job (http)
+
+on route::/http/net/explab/cloud/sandbox/%USER_SLASH_ROUTE% 
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+    permit map
+  }
+}
+
+// Permission to map route/job (tcp)
+
+on route::/tcp/10/97/56/250
+{
+  if (job fqnMatch "job::/sandbox/%USER_NAME%")
+  {
+    permit map
+  }
+}  
+
+// A developer user can create and use its own services
+on service::/sandbox/%USER_NAME% 
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+      permit all
+    }
+}
+
+// A deveolper user can create and use stagingpipelines in its own namespace
+on stagpipe::/sandbox/%USER_NAME%
+{
+  if (auth_server@apcera.me->name == %USER_NAME%) 
+  {
+    permit all
+  }
+}
+
+//on job::/sandbox/%USER_NAME% {
+//    {
+//        schedulingTag.soft explab
+//    }
+//}
+
+// To enable creation of the app "test123" in the /dev/%USER_NAME% namespace,
+// Uncomment the lines below
+// on job::/dev/%USER_NAME%::test123 {
+//   if (auth_server@apcera.me->name == %USER_NAME%) {
+//     permit all
+//   }
+// }
+// 
+// on package::/dev/%USER_NAME%::test123 {
+//   if (auth_server@apcera.me->name == %USER_NAME%) {
+//     permit all
+//   }
+// }
+
+//on job::/sandbox/%USER_NAME%
+//{
+//    {
+//        docker.allow "https://index.docker.io"
+//        docker.allow "https://registry-1.docker.io/" 
+//    }
+//}
