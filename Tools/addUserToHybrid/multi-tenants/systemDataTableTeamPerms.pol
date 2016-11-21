@@ -1,0 +1,26 @@
+on variables::/ {
+  system policy variable
+  {
+    TeamPerms (
+      teamname, 
+      workspace,
+      policydoc_suffix
+    ) {
+      {
+        "Project predictive-mobility",
+        ["*::/prod-predictive-mobility", "*::/test-predictive-mobility", "policy::/prod-predictive-mobility", "policy::/prod-predictive-mobility"],
+        "prA"
+      }
+      {
+        "Project cloud-idp",
+        ["*::/prod-cloud-idp", "*::/test-cloud-idp", "policy::/prod-cloud-idp", "policy::/test-cloud-idp"],
+        "prB"
+      }
+      {
+        "Project big-data",
+        ["*::/prod-big-data", "*::/test-big-data", "policy::/prod-big-data", "policy::/test-big-data"],
+        "prC"
+      }
+    }
+  }
+} 
