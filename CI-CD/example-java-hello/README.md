@@ -1,4 +1,4 @@
-### example-java-hello XXXX
+### example-java-hello
 
 Simple non web java application that demonstrates the Apcera Platforms's ability to run non web apps.
 
